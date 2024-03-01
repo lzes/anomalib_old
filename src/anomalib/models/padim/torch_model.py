@@ -121,7 +121,7 @@ class PadimModel(nn.Module):
             torch.Size([32, 128, 28, 28]),
             torch.Size([32, 256, 14, 14])]
         """
-
+        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
         if self.tiler:
             input_tensor = self.tiler.tile(input_tensor)
 

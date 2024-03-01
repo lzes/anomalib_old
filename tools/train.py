@@ -7,7 +7,6 @@ results.
 
 # Copyright (C) 2022 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
-
 import logging
 import warnings
 from argparse import ArgumentParser, Namespace
@@ -59,7 +58,7 @@ def train(args: Namespace):
     experiment_logger = get_experiment_logger(config)
     callbacks = get_callbacks(config)
 
-    trainer = Trainer(**config.trainer, logger=experiment_logger, callbacks=callbacks)
+    trainer = Trainer(**config.trainer, logger=experiment_logger, callbacks=callbacks, num_processes=0)
     logger.info("Training the model.")
     trainer.fit(model=model, datamodule=datamodule)
 

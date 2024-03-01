@@ -11,6 +11,7 @@ Paper https://arxiv.org/abs/2206.04325
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import torch
 from omegaconf import DictConfig, ListConfig
@@ -114,6 +115,9 @@ class Cfa(AnomalyModule):
         # TODO: Investigate why retain_graph is needed.
         loss.backward(retain_graph=True)
 
+    def on_train_epoch_end(self) -> None:
+        self.model.initialize_centroid(self.trainer.datamodule.train_dataloader())
+        return super().on_train_epoch_end()
 
 class CfaLightning(Cfa):
     """PL Lightning Module for the CFA model.

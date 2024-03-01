@@ -148,16 +148,34 @@ class CfaModel(DynamicBufferModule):
         Returns:
             Tensor: Memory Bank.
         """
+     
         device = next(self.feature_extractor.parameters()).device
         with torch.no_grad():
             for i, data in enumerate(tqdm(data_loader)):
                 batch = data["image"].to(device)
                 features = self.feature_extractor(batch)
                 features = list(features.values())
+                # patch_features: Tensor | None = None
+                # for j in features:
+                #     j = F.avg_pool2d(j, 3, 1, 1)
+                #     patch_features = (
+                #         j
+                #         if patch_features is None
+                #         else torch.cat((patch_features, F.interpolate(j, patch_features.size(2), mode="bilinear")), dim=1)
+                #     )
+                # target_features = patch_features
                 target_features = self.descriptor(features)
+                if len(self.memory_bank.shape) == 2:
+                    self.memory_bank = rearrange(
+                        self.memory_bank, 'c (1 h w) -> 1 c h w', 
+                        c=target_features.size()[1], 
+                        h=target_features.size()[2], 
+                        w=target_features.size()[2])
                 self.memory_bank = ((self.memory_bank * i) + target_features.mean(dim=0, keepdim=True)) / (i + 1)
 
         self.memory_bank = rearrange(self.memory_bank, "b c h w -> (b h w) c")
+        # shape = self.memory_bank.shape
+        # self.memory_bank = torch.rand(shape)
 
         if self.gamma_c > 1:
             # TODO: Create PyTorch KMeans class.

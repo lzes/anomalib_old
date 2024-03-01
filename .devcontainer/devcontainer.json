@@ -6,24 +6,32 @@
   "context": "..",
   // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
   "dockerFile": "../.ci/Dockerfile",
+  "target": "development",
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "python.pythonPath": "/home/user/conda/bin/python",
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
-    "python.formatting.blackArgs": ["--line-length", "120"],
+    "python.formatting.blackArgs": [
+      "--line-length",
+      "120"
+    ],
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     },
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--max-line-length=120"],
+    "python.linting.flake8Args": [
+      "--max-line-length=120"
+    ],
     "python.testing.cwd": ".",
     "python.linting.lintOnSave": true,
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": ["tests"]
+    "python.testing.pytestArgs": [
+      "tests"
+    ]
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
@@ -38,7 +46,10 @@
   // Uncomment the next line to run commands after the container is created - for example installing curl.
   // "postCreateCommand": "apt-get update && apt-get install -y curl",
   // Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-  "runArgs": ["--gpus=all", "--shm-size=20g"]
+  "runArgs": [
+    "--gpus=all",
+    "--shm-size=20g"
+  ]
   // Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
   // "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
   // Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
