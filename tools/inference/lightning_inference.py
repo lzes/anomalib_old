@@ -31,7 +31,7 @@ def get_parser() -> ArgumentParser:
         "--visualization_mode",
         type=str,
         required=False,
-        default="simple",
+        default="full",
         help="Visualization mode.",
         choices=["full", "simple"],
     )
